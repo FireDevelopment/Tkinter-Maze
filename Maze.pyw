@@ -781,6 +781,10 @@ def finish():
     except:
         s = open("settings/{}.txt".format(leveln),"w")
         s.write("{}".format(time))
+    root.unbind("<s>")
+    root.unbind("<w>")
+    root.unbind("<a>")
+    root.unbind("<d>")
     root.unbind("<KeyPress-Up>")
     root.unbind("<KeyPress-Down>")
     root.unbind("<KeyPress-Right>")
