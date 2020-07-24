@@ -10,8 +10,7 @@ try:
     import pygame
 
 except ImportError:
-    import subprocess
-    subprocess.call("soundinstall.bat")
+    os.system('py -m pip install pygame')
 
 import math, time, os, webbrowser
 
