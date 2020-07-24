@@ -1,5 +1,13 @@
 Welcome to the Maze Game!
 
+
+General Info:
+You need Python 3.X and you ned Tkinter and Pygame,
+Tkinter is automatically shipped with python, but pygame is not.
+
+There is a automatic pygame installer in teh game if you don't have Pygame, but it's recoomended to install it yourself if you don't use windows:
+
+
 This is info about the files
 
 DO NOT move any files or the code will not work
