@@ -1235,7 +1235,7 @@ def setcolsubmit():
         messagebox.showwarning("Player Color Error", "Invalid Color in Player Color Settings, using default untill changed")
         plcolt = 'white'
     plcol = plcolt
-    if plcol == 'orange' or plcol == 'red' or plcol == 'black' or plcol == 'light blue' or plcol == 'yellow' or plcol == 'gold':
+    if plcol.lower() == 'orange' or plcol.lower() == 'red' or plcol.lower() == 'black' or plcol.lower() == 'light blue' or plcol.lower() == 'yellow' or plcol.lower() == 'gold':
         messagebox.showwarning("Bad Color Selection for player", "Your selected color for your player will make the player extremely hard to see, switching to default")
         plcol = 'white'
     r = open("./settings/color.txt","w")
