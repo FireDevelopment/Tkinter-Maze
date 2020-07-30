@@ -6,13 +6,13 @@ except ImportError:
     from Tkinter import *
     from Tkinter import messagebox
 
+import math, time, os, webbrowser
+
 try:
     import pygame
 
 except ImportError:
-    os.system('py -m pip install pygame')
-
-import math, time, os, webbrowser
+    os.system('py3 -m pip install pygame')
 
 root = Tk()
 
@@ -164,7 +164,7 @@ def levelonel():
     l = open("./bloom/warp.txt","r")
     warp = l.read()
     canvas_side = ms*cell_size
-    ffs = Canvas(root, width = canvas_side, height = canvas_side, bg = 'grey')
+    ffs = Canvas(root, width = canvas_side, height = canvas_side, bg = plcol)
     ffs.pack()
     timer()
     create()
@@ -781,10 +781,10 @@ def finish():
     except:
         s = open("settings/{}.txt".format(leveln),"w")
         s.write("{}".format(time))
-    root.unbind("<s>")
     root.unbind("<w>")
-    root.unbind("<a>")
+    root.unbind("<s>")
     root.unbind("<d>")
+    root.unbind("<a>")
     root.unbind("<KeyPress-Up>")
     root.unbind("<KeyPress-Down>")
     root.unbind("<KeyPress-Right>")
@@ -1347,8 +1347,6 @@ def sounderror():
     pygame.mixer.music.load('./Music/Overflow.ogg')
     pygame.mixer.music.play(-1)
         
-global soundc
-soundc = 1
 
 if sound == 1:
     try:
@@ -1360,14 +1358,18 @@ if sound == 1:
         sound = 0
 
 
-if soundc == 1:
-    if sound == 1:
+if sound == 1:
+    try:
         pygame.mixer.music.load('./Music/Overflow.ogg')
         pygame.mixer.music.play(-1)
-    if sound < 0:
-        sounderror()
-    if sound > 1:
-        sounderror()
+    except:
+        s = open("settings/sound.txt","w")
+        s.write("0")
+        sound = 0
+if sound < 0:
+    sounderror()
+if sound > 1:
+    sounderror()
         
 #sound effects
 if sound == 1:
@@ -1710,7 +1712,6 @@ def menuarrowl():
         play.config(bg = "blue")
         more.config(bg = "blue")
         root.bind("<Return>", lambda e: settingsf())
-
 
 root.resizable(False, False)
 root.iconbitmap('./Images/logo.ico')
