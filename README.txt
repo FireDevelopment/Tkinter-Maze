@@ -1,20 +1,24 @@
-Welcome to the Maze Game!
+# Maze Game
 
 
-General Info:
+## General Info:
 You need Python 3.X and you ned Tkinter and Pygame,
 Tkinter is automatically shipped with python, but pygame is not.
 
 There is a automatic pygame installer in the game if you don't have Pygame.
 
+## How to play:
+Just press the arrow keys.
+You have to try to get to the goal as fast as possible.
 
-This is info about the files
+
+## Important:
 
 DO NOT move any files or the code will not work
 
 Thank you and have fun playing
 
-Information about the files:
+## File Information
 
 Maze.py:
 The main game with the settings, music, records, how to play, and levels
@@ -22,14 +26,8 @@ The main game with the settings, music, records, how to play, and levels
 settings folder:
 The settings for the game, records, colors, and sound, do not change them.
 
-soundinstall.bat:
-Automatically installs pygame.
-
-bloom folder:
-Contains data for the first level, if file inside are moved, the level will not load correctly.
-
-_pycache_ folder:
-Python makes this for some reason, if you delete it, it will come back, I don't know why.
+levels folder:
+Contains the level data for the level "Bloom". More levels will be moved over there eventually.
 
 images folder:
 contains all the images used for the game, do not move these files
@@ -40,5 +38,5 @@ contains all music played throughout the game, do not delete of move them.
 sounds folder:
 contains the soundeffects, do not move them.
 
-Notes about discord server:
-Link is in the more section, don't be weird in the server and read the rules
+## Discord Server:
+The Discord Server has been deleted.
