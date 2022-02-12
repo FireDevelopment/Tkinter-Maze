@@ -1,5 +1,2 @@
-You may download this and change it,
-
-but don't put it back up as your own, make sure you give partial credit.
-
-Also, do not put this back up as not open source.
+If you use this in one of your projects, give partial credit.
+Do not put this back up as closed source.
