@@ -29,6 +29,12 @@ The settings for the game, records, colors, and sound, do not change them.
 levels folder:
 Contains the level data for the level "Bloom". More levels will be moved over there eventually.
 
+chaoz folder:
+Contains the level data for the level "Chaoz"
+
+funky folder:
+Contains the level data for the level "Funky"
+
 images folder:
 contains all the images used for the game, do not move these files
 
