@@ -14,7 +14,7 @@ try:
     import pygame
 
 except ImportError:
-    os.system('py -m pip install pygame')
+    os.system('py3 -m pip install pygame')
 
 root = Tk()
 
@@ -1521,7 +1521,12 @@ def menufive():
     try:
         s = open("settings/bloom.txt","r")
         a = s.read()
-        sec = a + ' sec'
+        if a == '0':
+            s.close()
+            os.remove("settings/bloom.txt")
+            sec = 'Cheating Detected, Score Reset'
+        else:
+            sec = a + ' sec'
     except:
         sec = 'Not Yet Completed'
     br = Label(text = "Bloom: {}".format(sec), font = ("arial",15), bg = "black", fg = "orange", pady = 20)
@@ -1529,17 +1534,30 @@ def menufive():
     try:
         s = open("settings/chaoz.txt","r")
         a = s.read()
-        sec = a + ' sec'
+        if a == '0':
+            s.close()
+            os.remove("settings/chaoz.txt")
+            sec = 'Cheating Detected, Score Reset'
+        else:
+            sec = a + ' sec'
     except:
         sec = 'Not Yet Completed'
+
     cr = Label(text = "Chaoz: {}".format(sec), font = ("arial",15), bg = "black", fg = "orange", pady = 20)
     cr.pack()
+
     try:
-        s = open("settings/Funky.txt","r")
+        s = open("settings/funky.txt","r")
         a = s.read()
-        sec = a + ' sec'
+        if a == '0':
+            s.close()
+            os.remove("settings/funky.txt")
+            sec = 'Cheating Detected, Score Reset'
+        else:
+            sec = a + ' sec'
     except:
         sec = 'Not Yet Completed'
+    
     fr = Label(text = "Funky: {}".format(sec), font = ("arial",15), bg = "black", fg = "orange", pady = 20)
     fr.pack()
     backr = Button(text = "Back", font = ("arial", 15), bg = "orange", fg = "black", command = recordback)
