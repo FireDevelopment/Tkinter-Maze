@@ -6,13 +6,15 @@ except ImportError:
     from Tkinter import *
     from Tkinter import messagebox
 
-import math, time, os, webbrowser
+import math, os, json, webbrowser
+from time import sleep
+
 
 try:
     import pygame
 
 except ImportError:
-    os.system('py3 -m pip install pygame')
+    os.system('py -m pip install pygame')
 
 root = Tk()
 
@@ -64,12 +66,15 @@ global warp
 warp = 0
 global mfs
 mfs = 1
+global aam
+aam = 1
 
 global ms
 global cell_size
 
 
 soundg = StringVar()
+
 
 #levels
 
@@ -105,69 +110,61 @@ def levelonel():
             pygame.mixer.music.load('./Music/Bloom.ogg')
             pygame.mixer.music.play(-1)
         except:
-            messagebox.showwarning("Music File Not Found Error", "Can not find the file Bloom.ogg, make sure it is in the right directorie")
-    ms = 10
-    cell_size = 50
+            messagebox.showwarning("Music File Not Found Error", "Can not find the file Bloom.ogg, make sure it is in the right directory")
 
+    #map size (rows and columns)
+    ms = 10
+
+    #size of each square
+    cell_size = 50
+    
+    #create the map and set everything to a wall
     map = [['w' for _ in range(ms)] for _ in range(ms)]
 
-    l = open("./bloom/y2.txt","r")
-    r = l.read()
-    row = 1
-    col = 0
-    for x in r:
-        map[1][col] = x
-        col = col + 1
-    l = open("./bloom/y3.txt","r")
-    r = l.read()
-    row = 2
-    col = 0
-    for x in r:
-        map[2][col] = x
-        col = col + 1
-    l = open("./bloom/y4.txt","r")
-    r = l.read()
-    col = 0
-    for x in r:
-        map[3][col] = x
-        col = col + 1
-    l = open("./bloom/y5.txt","r")
-    r = l.read()
-    col = 0
-    for x in r:
-        map[4][col] = x
-        col = col + 1
-    l = open("./bloom/y6.txt","r")
-    r = l.read()
-    col = 0
-    for x in r:
-        map[5][col] = x
-        col = col + 1
-    l = open("./bloom/y7.txt","r")
-    r = l.read()
-    col = 0
-    for x in r:
-        map[6][col] = x
-        col = col + 1
-    l = open("./bloom/y8.txt","r")
-    r = l.read()
-    col = 0
-    for x in r:
-        map[7][col] = x
-        col = col + 1
-    l = open("./bloom/y9.txt","r")
-    r = l.read()
-    col = 0
-    for x in r:
-        map[8][col] = x
-        col = col + 1
-    l = open("./bloom/warp.txt","r")
-    warp = l.read()
+    #read the level
+    map = readLevel(leveln)
+
+    #length of canvas
     canvas_side = ms*cell_size
+
+    #actual canvas
     ffs = Canvas(root, width = canvas_side, height = canvas_side, bg = plcol)
     ffs.pack()
+    
+    #start timer
     timer()
+    #draw map
     create()
+
+def readLevel(leveln):
+    #read the level data
+    l = open(f"./levels/{leveln}.txt", "r")
+    ld = json.loads(l.read())
+
+    #row that is currently being read
+    blockr = 0
+
+    #for every row in level:
+    for y in list(ld.keys()):
+        #warp property
+        if y == "warp":
+            warp = ld[y]
+            break
+        #get the blocks in the row
+        row = ld[y]
+        #column (x) for each block
+        col = 0
+        #for each block in that row
+        for block in row:
+            #put block on map
+            map[blockr][col] = block
+            #make the x one to the right
+            col = col+1
+
+        #increase the row
+        blockr=blockr+1
+
+    return map
 
 def create():
     "Create a rectangle with draw function (below) with random color"
@@ -1054,7 +1051,7 @@ def musicback():
     musicbthree.pack_forget()
     musicbfour.pack_forget()
     back2.pack_forget()
-    subbackb.place(x = 310, y = 200)
+    subbackb.place(x = 320, y = 200)
     how.place(x = 220, y = 200)
     record.place(x = 150, y = 200)
     music.place(x = 20, y = 200)
@@ -1421,7 +1418,7 @@ def menufour():
     how = Button(root, image = howpic2, bg = "blue", command = menusix)
     how.place(x = 220, y = 200)
     subbackb = Button(root, text = "Back", bg = "black", fg = "orange", font = ("arial", 15), command = subback)
-    subbackb.place(x = 310, y = 200)
+    subbackb.place(x = 320, y = 200)
     subl = Label(root, text = "More Options:", font = ("arial", 20), bg = "black", fg = "orange")
     subl.pack()
     discordb = Button(root, text = "Discord Server here!", font = ("arial", 20), bg = "black", fg = "orange", command = discord)
@@ -1444,7 +1441,7 @@ def subarrowl():
     if mfs == 0:
         mfs = mfs + 1
     if mfs == 1:
-        music.config(bg = "orange", fg = "blue")
+        music.config(bg = "orange", fg = "black")
         record.config(fg = "orange", bg = "blue")
         how.config(fg = "orange", bg = "blue")
         subbackb.config(fg = "orange", bg = "black")
@@ -1473,7 +1470,7 @@ def subarrowr():
     if sound == 1:
         select.play()
     mfs = mfs + 1
-    if mfs == 5:
+    if mfs == 6:
         mfs = mfs - 1
     if mfs == 0:
         mfs = mfs + 1
@@ -1493,6 +1490,7 @@ def subarrowr():
         how.config(bg = "orange", fg = "black")
         music.config(fg = "orange", bg = "blue")
         record.config(fg = "orange", bg = "blue")
+
         subbackb.config(fg = "orange", bg = "black")
         root.bind("<Return>", lambda e: menusix())
     if mfs == 4:
@@ -1557,7 +1555,7 @@ def recordback():
     cr.pack_forget()
     fr.pack_forget()
     backr.pack_forget()
-    subbackb.place(x = 310, y = 200)
+    subbackb.place(x = 320, y = 200)
     how.place(x = 220, y = 200)
     record.place(x = 150, y = 200)
     music.place(x = 20, y = 200)
@@ -1597,7 +1595,7 @@ def howback():
     howi.pack_forget()
     howm.pack_forget()
     howbackb.place_forget()
-    subbackb.place(x = 310, y = 200)
+    subbackb.place(x = 320, y = 200)
     how.place(x = 220, y = 200)
     record.place(x = 150, y = 200)
     music.place(x = 20, y = 200)
@@ -1606,6 +1604,8 @@ def howback():
     root.bind("<Return>", lambda e: menusix())
     root.bind("<KeyPress-Left>", lambda e: subarrowl())
     root.bind("<KeyPress-Right>", lambda e: subarrowr())
+
+    
 
 def subback():
     global sound, mfs
@@ -1628,36 +1628,44 @@ def subback():
     root.bind("<KeyPress-Right>", lambda e: menuarrowr())
     root.bind("<KeyPress-Left>", lambda e: menuarrowl())
 
+#loading screen:
+loadpic = PhotoImage(file =r"./Images/load.gif")
+bgpic = PhotoImage(file =r"./Images/MAIN.gif")
+logopic = PhotoImage(file =r"./Images/Icon.gif")
+devpic = PhotoImage(file =r"./Images/FIREDEV.gif")
+playpic = PhotoImage(file =r"./Images/Play.gif")
+playpic2 = playpic.subsample(3,3)
+morepic = PhotoImage(file =r"./Images/More.gif")
+morepic2 = morepic.subsample(5,5)
+recordpic = PhotoImage(file =r"./Images/trophy.gif")
+recordpic2 = recordpic.subsample(4,4)
+howpic = PhotoImage(file = r"./Images/How.gif")
+howpic2 = howpic.subsample(5,5)
+howtopic = PhotoImage(file = r"./Images/HowPic.gif")
+howtopic2 = howtopic.subsample(3,3)
+loadpicl = Label(root, image = loadpic)
+musicpic = PhotoImage(file =r"./Images/Music.gif")
+musicpic2 = musicpic.subsample(6,6)
+settingspic = PhotoImage(file =r"./Images/Settings.gif")
+settingspic2 = settingspic.subsample(6,6)
+loadpicl.pack(side=TOP, expand=YES, fill=BOTH)
+dev = Label(root, image = devpic)
+dev.pack(side=BOTTOM, expand=YES, fill=BOTH)
+
+
 #starting screen:
-if menu == 1:
-    bgpic = PhotoImage(file =r"./Images/MAIN.gif")
-    logopic = PhotoImage(file =r"./Images/Icon.gif")
-    devpic = PhotoImage(file =r"./Images/FIREDEV.gif")
-    playpic = PhotoImage(file =r"./Images/Play.gif")
-    playpic2 = playpic.subsample(3,3)
-    morepic = PhotoImage(file =r"./Images/More.gif")
-    morepic2 = morepic.subsample(5,5)
-    recordpic = PhotoImage(file =r"./Images/trophy.gif")
-    recordpic2 = recordpic.subsample(4,4)
-    howpic = PhotoImage(file = r"./Images/How.gif")
-    howpic2 = howpic.subsample(5,5)
-    howtopic = PhotoImage(file = r"./Images/HowPic.gif")
-    howtopic2 = howtopic.subsample(3,3)
+def startingscreen():
+    global logo, bg, play, more, settings
+    loadpicl.pack_forget()
     logo = Label(root, image = logopic)
     logo.pack(side=TOP, expand=YES, fill=X)
     bg = Label(root, image = bgpic)
     bg.pack(side=TOP, expand=YES, fill=BOTH)
-    dev = Label(root, image = devpic)
-    dev.pack(side=BOTTOM, expand=YES, fill=BOTH)
     play = Button(root, image = playpic2, bg = "orange", command = menutwo)
     play.place (x = 225,y = 310)
     root.bind("<Return>", lambda e: menutwo())
-    musicpic = PhotoImage(file =r"./Images/Music.gif")
-    musicpic2 = musicpic.subsample(6,6)
     more = Button(root, image = morepic2, bg = "blue", command = menufour)
     more.place(x = 330, y = 315)
-    settingspic = PhotoImage(file =r"./Images/Settings.gif")
-    settingspic2 = settingspic.subsample(6,6)
     settings = Button(root, image = settingspic2, bg = "blue", command = settingsf)
     settings.place(x = 120, y = 315)
     root.bind("<KeyPress-Right>", lambda e: menuarrowr())
@@ -1713,9 +1721,11 @@ def menuarrowl():
         more.config(bg = "blue")
         root.bind("<Return>", lambda e: settingsf())
 
+
 root.resizable(False, False)
 root.iconbitmap('./Images/logo.ico')
 root.wm_title("Maze Game!")
 root.config(bg = "black")
 root.geometry("520x600")
+root.after(500, startingscreen)
 root.mainloop()
