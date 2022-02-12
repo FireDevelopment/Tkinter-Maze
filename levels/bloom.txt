@@ -1,0 +1,13 @@
+{ 
+    "y1" : "wwwwwwwwww",
+    "y2" : "wwpgggggww",
+    "y3" : "wgggwwgwww",
+    "y4" : "wwwggwgggw",
+    "y5" : "wwwggwwwww",
+    "y6" : "wcwcgggggw",
+    "y7" : "wgwwwwwwgw",
+    "y8" : "wggggggggw",
+    "y9" : "wcgggggfww",
+    "y10" : "wwwwwwwwww",
+    "warp" : "0"
+}
